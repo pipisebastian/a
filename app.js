@@ -3,8 +3,12 @@ const parse = require('parse-json');
 const app = express();
 const fs = require('fs');//파일/폴더 시스템. 디렉토리 생성,읽기,삭제
 const spawn = require('child_process').spawn;
-app.set('view engine','pug');
-app.set('views','./views');
+
+
+app.engine('html', require('ejs').renderFile);
+app.set("views", "./views");
+app.set("view engine", "html");
+
 //app.use()에 '/~' 주소?요청?경로 없음=> 모든 요청에서 실행 
 app.use(express.urlencoded({extended: false})); //bodyparser
 app.use(express.json());//bodyparser. json형식!!으로 데이터 받음.

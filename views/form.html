@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+</head>
+
+<body>
+    <h1>문제<select id="language" name="language">
+            <option name="1">C</option>
+            <option name="2">C++</option>
+            <option name="3">Java</option>
+        </select>
+        <p></p><textarea id="code" style="resize:none; width:400px; height:300px;" name="code"></textarea>
+        <p></p><input id="output" type="text" name="output" style="resize:none; width:400px; height:50px;" readonly="readonly">
+        <p></p><input class="ajaxsend" id="ajax_post" type="button" value="제출하기">
+        <p></p>
+        <script>
+            document.querySelector('.ajaxsend').addEventListener('click', function() {
+                sendAjax('http://localhost:8000/form_receive', code.value);
+            }) //form_receive : 
+            function sendAjax(url, data, language) {
+                var data = {
+                    'code': data
+                };
+                data = JSON.stringify(data);
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', url, true);
+                xhr.setRequestHeader('Content-type', 'application/json');
+                xhr.send(data);
+
+                xhr.addEventListener('load', function() {
+                    var result = JSON.parse(xhr.responseText);
+                    if (result.result != 'ok') return;
+                    document.getElementById('output').value = result.output;
+                });
+            }
+            script(src = 'https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js')
+        </script>
+        <p></p>
+    </h1>
+</body>
+
+</html>
